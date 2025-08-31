@@ -1,6 +1,6 @@
 #+TITLE: Emacs 配置文件
 #+AUTHOR: Baojie
-#+DATE: Time-stamp: <2025-08-31 22:09:57 baojie>
+#+DATE: Time-stamp: <2025-08-31 22:29:39 baojie>
 :PROPERTIES:
 #+PROPERTY: header-args :tangle yes
 #+OPTIONS: toc:2
@@ -788,6 +788,12 @@ permissions 为t,那么你还能编辑文件属性).
   (setq ediff-keep-variants nil)
   (setq ediff-make-buffers-readonly-at-startup nil)
   (setq ediff-show-clashes-only t))
+#+end_src
+
+*** Magit
+
+#+begin_src emacs-lisp
+(use-package magit)
 #+end_src
 
 ** Subword Mode
