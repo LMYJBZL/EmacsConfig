@@ -1,6 +1,6 @@
 #+TITLE: Emacs 配置文件
 #+AUTHOR: Baojie
-#+DATE: Time-stamp: <2025-09-01 11:25:40 baojie>
+#+DATE: Time-stamp: <2025-09-01 11:45:06 baojie>
 :PROPERTIES:
 #+PROPERTY: header-args :tangle yes
 #+OPTIONS: toc:2
@@ -560,7 +560,7 @@ electric pair
 
 ** TODO Theme
 
-[] 新 Frame 的 model line 加粗
+[] 新 Frame 的 model line 加粗.
 
 #+begin_src emacs-lisp
 (use-package modus-themes
