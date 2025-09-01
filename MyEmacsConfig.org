@@ -1,6 +1,6 @@
 #+TITLE: Emacs 配置文件
 #+AUTHOR: Baojie
-#+DATE: Time-stamp: <2025-08-31 22:29:39 baojie>
+#+DATE: Time-stamp: <2025-09-01 11:25:40 baojie>
 :PROPERTIES:
 #+PROPERTY: header-args :tangle yes
 #+OPTIONS: toc:2
@@ -305,22 +305,13 @@ are defining or executing a macro."
        (lambda (file)
          (let ((full-path (expand-file-name file)))
            (or
-            (string-prefix-p (expand-file-name "~/Documents/") full-path)
-            (string= (expand-file-name "~/Library/Mobile Documents/com~apple~CloudDocs/EmacsConfigMinimal.org")
+            (string-prefix-p (expand-file-name "~/Documents/Notes/") full-path)
+            (string= (expand-file-name "~/Documents/Archives/Emacs/MyEmacsConfig.org")
                      full-path))))))
 
   (add-to-list 'recentf-exclude no-littering-var-directory)
   (add-to-list 'recentf-exclude no-littering-etc-directory)
   (add-to-list 'recentf-exclude "\\.\\(el\\|css\\|pdf\\)$"))
-
-;; 添加清理命令
-(defun my-clean-recentf ()
-  "清理 recentf 并删除保存的文件"
-  (interactive)
-  (recentf-cleanup)
-  (when (file-exists-p recentf-save-file)
-    (delete-file recentf-save-file))
-  (message "Recentf 缓存已清除"))
 
 ;; savehist：保存 minibuffer 的历史输入记录
 (use-package savehist
@@ -567,7 +558,9 @@ electric pair
   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 #+end_src
 
-** Theme
+** TODO Theme
+
+[] 新 Frame 的 model line 加粗
 
 #+begin_src emacs-lisp
 (use-package modus-themes
