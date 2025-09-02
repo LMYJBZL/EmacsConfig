@@ -1,6 +1,6 @@
 #+TITLE: Emacs 配置文件
 #+AUTHOR: Baojie
-#+DATE: Time-stamp: <2025-09-01 12:00:09 baojie>
+#+DATE: Time-stamp: <2025-09-02 10:59:09 baojie>
 :PROPERTIES:
 #+PROPERTY: header-args :tangle yes
 #+OPTIONS: toc:2
@@ -366,10 +366,9 @@ Tab 与缩进
                 (tool-bar-lines . 0)
                 (vertical-scroll-bars . nil)
                 (horizontal-scroll-bars . nil)
-
-                (fullscreen . fullheight)
+                ;; (fullscreen . fullheight)
+                (height . 50)
                 (width . 123)
-
                 ;; (alpha . (95 . 95))
 
                 (left-fringe . 11)
@@ -378,31 +377,22 @@ Tab 与缩进
 
 (setq frame-title-format '("" "%b - (•̀ᴗ•́)و"))
 
-;; (add-hook 'window-setup-hook
-;;           (lambda ()
-;;             (menu-bar-mode -1)
-;;             (tool-bar-mode -1)
-;;             (scroll-bar-mode -1)))
-
 (setq-default cursor-in-non-selected-windows nil)
 (setq-default highlight-nonselected-windows nil)
-
 (blink-cursor-mode 1)
 (setq-default cursor-type 'box)
 (setq blink-cursor-interval 0.7)
-
 (setq x-stretch-cursor t)
 
-;; 不在新 frame 打开文件（如 Finder 的 "Open with Emacs") 。
 (setq ns-pop-up-frames nil)
-
-;; 复用当前 frame。
 (setq display-buffer-reuse-frames t)
 (setq frame-resize-pixelwise t)
 
-;; 30: 左右分屏, nil: 上下分屏。
-(setq split-width-threshold nil)
+;; 分屏策略：宽屏优先左右分屏，否则上下分屏
+(setq split-width-threshold 120)
+(setq split-height-threshold nil)
 
+;; buffer 显示 obey display-buffer-alist
 (setq switch-to-buffer-obey-display-actions t)
 #+end_src
 
@@ -978,17 +968,17 @@ permissions 为t,那么你还能编辑文件属性).
   (context-menu-mode t)
   (read-extended-command-predicate #'command-completion-default-include-p))
 
-(setq completion-lazy-hilit t)
-(setq completion-show-help nil)
-(setq completion-auto-help t)
-(setq completion-auto-select t) ;; 'second-tab
-(setq completion-show-inline-help nil)
-(setq completion-ignore-case t)
+(setq completion-lazy-hilit t
+      completion-show-help nil
+      completion-auto-help t
+      completion-auto-select nil ;; 'second-tab
+      completion-show-inline-help nil
+      completion-ignore-case t)
 
-(setq completions-format 'vertical)
-(setq completions-group t)
-(setq completions-detailed t)
-(setq completions-max-height 10)
+(setq completions-format 'vertical
+      completions-group t
+      completions-detailed t
+      completions-max-height 10)
 ;; (setq completions-header-format (propertize "%s candidates:\n" 'face 'font-lock-comment-face))
 (setq completions-highlight-face 'completions-highlight)
 
@@ -1046,9 +1036,9 @@ permissions 为t,那么你还能编辑文件属性).
                       (name . "\\.cjs")
                       (name . "\\.ts")))
          ("Web" (or (mode . html-mode)
-                        (name . "\\.html")
-                        (name . "\\.njk")
-                        (mode . jinja2-mode)))
+                    (name . "\\.html")
+                    (name . "\\.njk")
+                    (mode . jinja2-mode)))
          ("CSS" (or (mode . css-mode)
                     (mode . scss-mode)
                     (mode . sass-mode)
@@ -1065,12 +1055,12 @@ permissions 为t,那么你还能编辑文件属性).
                                  (name . "\\.yaml")
                                  (mode . kintaro-mode)
                                  (name . "\\.ksdl")))
-          ("TeX" (mode . LaTeX-mode))
+         ("TeX" (mode . LaTeX-mode))
          ("SVG" (name . "\\.svg"))
          ("ERC" (mode . erc-mode))
          ("find" (or (mode . xref-mode)
                      (mode . dired-mode)))
-         ("emacs-config" (or (name . "emacs-config")
+         ("emacs-config" (or (name . "MyEmacsConfig")
                              (name . "djr-init")
                              (name . "README.org")
                              (name . "init.el")))
@@ -1115,9 +1105,9 @@ permissions 为t,那么你还能编辑文件属性).
 (setq ibuffer-use-other-window t)
 
 (add-hook 'ibuffer-mode-hook
-           #'(lambda ()
-            (ibuffer-switch-to-saved-filter-groups "default")
-            (display-line-numbers-mode -1)))
+          #'(lambda ()
+              (ibuffer-switch-to-saved-filter-groups "default")
+              (display-line-numbers-mode -1)))
 #+end_src
 
 *** Helpful
@@ -1149,10 +1139,8 @@ permissions 为t,那么你还能编辑文件属性).
              '("\\*e?shell\\*"
                (display-buffer-in-side-window)
                (side . bottom)
-               (slot . -1) ;; -1 == L  0 == Mid 1 == R
-               (window-height . 0.33) ;; 底部左侧占 2/3
-               (window-parameters
-                (no-delete-other-windows . nil))))
+               (slot . -1)
+               (window-height . 0.33)))
 
 (add-to-list 'display-buffer-alist
              '("\\*\\(Backtrace\\|Compile-log\\|Messages\\|Warnings\\)\\*"
@@ -1165,14 +1153,14 @@ permissions 为t,那么你还能编辑文件属性).
              '("\\*\\([Hh]elp\\|Command History\\|command-log\\)\\*"
                (display-buffer-in-side-window)
                (side . bottom)
-               (slot . 0)
-                (window-height . 0.33) ))
+               (slot . 1)
+               (window-height . 0.33)))
 
 (add-to-list 'display-buffer-alist
              '("\\*TeX errors\\*"
                (display-buffer-in-side-window)
                (side . bottom)
-               (slot . 3)
+               (slot . 2)
                (window-height . shrink-window-if-larger-than-buffer)
                (dedicated . t)))
 
@@ -1180,7 +1168,7 @@ permissions 为t,那么你还能编辑文件属性).
              '("\\*TeX Help\\*"
                (display-buffer-in-side-window)
                (side . bottom)
-               (slot . 4)
+               (slot . 3)
                (window-height . shrink-window-if-larger-than-buffer)
                (dedicated . t)))
 #+end_src
