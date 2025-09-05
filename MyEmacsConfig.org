@@ -1,6 +1,6 @@
 #+TITLE: Emacs 配置文件
 #+AUTHOR: Baojie
-#+DATE: Time-stamp: <2025-09-02 10:59:09 baojie>
+#+DATE: Time-stamp: <2025-09-05 19:24:06 baojie>
 :PROPERTIES:
 #+PROPERTY: header-args :tangle yes
 #+OPTIONS: toc:2
@@ -367,8 +367,11 @@ Tab 与缩进
                 (vertical-scroll-bars . nil)
                 (horizontal-scroll-bars . nil)
                 ;; (fullscreen . fullheight)
-                (height . 50)
+                (height . 76)
                 (width . 123)
+                (left . 123)
+                (top . 0)
+                ;; (top . 76)
                 ;; (alpha . (95 . 95))
 
                 (left-fringe . 11)
@@ -394,6 +397,7 @@ Tab 与缩进
 
 ;; buffer 显示 obey display-buffer-alist
 (setq switch-to-buffer-obey-display-actions t)
+(setq switch-to-buffer-in-dedicated-window 'pop)
 #+end_src
 
 ** 分隔符
